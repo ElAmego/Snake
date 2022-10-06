@@ -6,11 +6,13 @@
   transform: translate(-50%, -50%);
 
   max-width: 500px;
+  border: solid 3px #B8FE4F;
 
   background-color: #69D949;
 }
 
 #logo {
+  padding: 0 10px;
   font-size: 72px;
   font-family: "Undertale-Battle-Font";
   text-align: center;
