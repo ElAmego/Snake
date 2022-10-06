@@ -6,6 +6,8 @@ const exit = document.getElementById('exit');
 
 playGame.addEventListener('click', createGame, false);
 
+window.addEventListener('load', createGame, false)
+
 function createGame() {
   document.body.removeChild(container)
 
