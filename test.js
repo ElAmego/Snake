@@ -333,16 +333,19 @@ function createGame() {
 
   // Getting first position
   function TouchStart(e) {
+    e.preventDefault();
     touchStart = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
     touchPosition = { x: touchStart.x, y: touchStart.y };
   }
 
   // Getting new position
   function TouchMove(e) {
+    e.preventDefault();
     touchPosition = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
   }
 
   function TouchEnd(e) {
+    e.preventDefault();
     CheckAction();
 
     // Clearing positions
@@ -382,8 +385,6 @@ function createGame() {
       }
     }
   }
-
-  //
 
   let interval = setInterval(drawGame, 100);
   document.body.appendChild(game)
