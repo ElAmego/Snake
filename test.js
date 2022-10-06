@@ -6,9 +6,14 @@ const exit = document.getElementById('exit');
 
 playGame.addEventListener('click', createGame, false);
 
-window.addEventListener('load', createGame, false)
+const soundEat = new Audio();
+soundEat.src = 'sounds/eat.mp3';
 
 function createGame() {
+  clickSoundInit();
+
+  window.navigator.vibrate(200)
+
   document.body.removeChild(container)
 
   const widthScreen =  window.innerWidth;
@@ -253,7 +258,7 @@ function createGame() {
     let snakeY = snakeObj.snake[0].y;
 
     if(snakeX == appleObj.x && snakeY == appleObj.y) {
-      window.navigator.vibrate(200)
+      clickSound()
       appleObj.new();
       counterObj.scores += 1;
     } else {
@@ -301,6 +306,8 @@ function createGame() {
     buttonAgain.addEventListener('click', again, false);
 
     function again() {
+      window.navigator.vibrate(200)
+
       document.body.removeChild(end);
 
       appleObj.new();
@@ -313,6 +320,8 @@ function createGame() {
     buttonExit.addEventListener('click', exit, false);
 
     function exit() {
+      window.navigator.vibrate(200)
+      
       document.body.removeChild(game);
       document.body.removeChild(end);
       document.body.appendChild(container)
@@ -393,6 +402,16 @@ function createGame() {
         }
       }
     }
+  }
+
+  function clickSoundInit() {
+    soundEat.play(); 
+    soundEat.pause(); 
+  }
+
+  function clickSound() {
+    soundEat.currentTime=0;
+    soundEat.play();
   }
 
   let interval = setInterval(drawGame, 100);
