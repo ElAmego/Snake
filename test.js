@@ -383,6 +383,8 @@ function createGame() {
     }
   }
 
+  //
+
   let interval = setInterval(drawGame, 100);
   document.body.appendChild(game)
   game.appendChild(canvas)
