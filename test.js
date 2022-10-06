@@ -223,6 +223,10 @@ function createGame() {
 
   // Game
 
+  snakeBodyImg.addEventListener('load', drawGame, false)
+  snakeHeadImg.addEventListener('load', drawGame, false)
+  appleImg.addEventListener('load', drawGame, false)
+
   function drawGame() {
     ctx.beginPath();
     ctx.fillStyle = ('#674D3D')
