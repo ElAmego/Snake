@@ -295,6 +295,7 @@ function createGame() {
     buttonExit.style.marginBottom = gameSize/30 + 'px';
 
     buttonAgain.addEventListener('touchstart', again, false);
+    buttonAgain.addEventListener('click', again, false);
 
     function again() {
       document.body.removeChild(end);
@@ -306,6 +307,7 @@ function createGame() {
     }
 
     buttonExit.addEventListener('touchstart', exit, false);
+    buttonExit.addEventListener('click', exit, false);
 
     function exit() {
       document.body.removeChild(game);
@@ -336,19 +338,16 @@ function createGame() {
 
   // Getting first position
   function TouchStart(e) {
-    e.preventDefault();
     touchStart = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
     touchPosition = { x: touchStart.x, y: touchStart.y };
   }
 
   // Getting new position
   function TouchMove(e) {
-    e.preventDefault();
     touchPosition = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
   }
 
   function TouchEnd(e) {
-    e.preventDefault();
     CheckAction();
 
     // Clearing positions
@@ -372,18 +371,22 @@ function createGame() {
       if(Math.abs(d.x) > gestureLength) {
           
         // Axis X
-        if(d.x > 0) {
+        if (d.x > 0 && dir != 'right') {
           dir = 'left'; // Left
-        } else {
-          dir = 'right';; // Right
+          snakeHeadImg.src = 'img/snake_head_left.svg';
+        } else if (d.x < 0 && dir != 'left') {
+          dir = 'right'; // Right
+          snakeHeadImg.src = 'img/snake_head_right.svg';
         }
       }
     } else {  // Axis y
       if(Math.abs(d.y) > gestureLength) {
-        if(d.y > 0) {
+        if(d.y > 0 && dir != 'down') {
           dir = 'up'; // Up
-        } else {
+          snakeHeadImg.src = 'img/snake_head_up.svg';
+        } else if (d.y < 0 && dir != 'up') {
           dir = 'down'; // Down
+          snakeHeadImg.src = 'img/snake_head_bottom.svg';
         }
       }
     }

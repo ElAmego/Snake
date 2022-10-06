@@ -86,18 +86,36 @@
   #play_game {
     width: 180px;
     font-size: 25px;
-
   }
 
   #leader_board {
     width: 180px;
     font-size: 25px;
-
   }
 
   #settings {
     width: 180px;
     font-size: 25px;
+  }
+}
 
+@media (min-width: 480px) and (max-width: 991px) {
+  #logo {
+    font-size: 30px;
+  }
+
+  #play_game {
+    width: 200px;
+    font-size: 20px;
+  }
+
+  #leader_board {
+    width: 200px;
+    font-size: 20px;
+  }
+
+  #settings {
+    width: 200px;
+    font-size: 20px;
   }
 }
