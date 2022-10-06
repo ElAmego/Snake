@@ -294,7 +294,7 @@ function createGame() {
     buttonExit.style.fontSize = gameSize/15 + 'px';
     buttonExit.style.marginBottom = gameSize/30 + 'px';
 
-    buttonAgain.addEventListener('click', again, false);
+    buttonAgain.addEventListener('touchstart', again, false);
 
     function again() {
       document.body.removeChild(end);
@@ -305,7 +305,7 @@ function createGame() {
       interval = setInterval(drawGame, 100)
     }
 
-    buttonExit.addEventListener('click', exit, false);
+    buttonExit.addEventListener('touchstart', exit, false);
 
     function exit() {
       document.body.removeChild(game);
