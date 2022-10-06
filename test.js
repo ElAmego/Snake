@@ -223,10 +223,6 @@ function createGame() {
 
   // Game
 
-  snakeBodyImg.addEventListener('load', drawGame, false)
-  snakeHeadImg.addEventListener('load', drawGame, false)
-  appleImg.addEventListener('load', drawGame, false)
-
   function drawGame() {
     ctx.beginPath();
     ctx.fillStyle = ('#674D3D')
@@ -255,6 +251,7 @@ function createGame() {
     let snakeY = snakeObj.snake[0].y;
 
     if(snakeX == appleObj.x && snakeY == appleObj.y) {
+      window.navigator.vibrate(200)
       appleObj.new();
       counterObj.scores += 1;
     } else {
