@@ -294,17 +294,20 @@ function createGame() {
     buttonExit.style.fontSize = gameSize/15 + 'px';
     buttonExit.style.marginBottom = gameSize/30 + 'px';
 
-    buttonAgain.onclick = function() {
+    buttonAgain.addEventListener('click', again, false);
+
+    function again() {
       document.body.removeChild(end);
 
       appleObj.new();
-
       snakeObj.replay();
 
       interval = setInterval(drawGame, 100)
     }
 
-    buttonExit.onclick = function() {
+    buttonExit.addEventListener('click', exit, false);
+
+    function exit() {
       document.body.removeChild(game);
       document.body.removeChild(end);
       document.body.appendChild(container)
