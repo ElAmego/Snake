@@ -122,7 +122,9 @@ function createGame() {
   }
 
   if (widthScreen <= heightScreen) {
-    if (widthScreen < 480 && widthScreen >= 320) {
+    if(widthScreen < 320 && widthScreen >= 200) {
+      gameSize = 225;
+    } else if (widthScreen < 480 && widthScreen >= 320) {
       gameSize = 300;
     } else if (widthScreen < 540 && widthScreen >= 480) {
       gameSize = 450;
@@ -467,14 +469,14 @@ function createGame() {
           snakeHead.src = snakeHeadLeftImg.src;
         } else if (d.x < 0 && dir != 'left') {
           dir = 'right'; // Right
-          snakeHead.src = snakeHeadUpImg.src;
+          snakeHead.src = snakeHeadRightImg.src;
         }
       }
     } else {  // Axis y
       if(Math.abs(d.y) > gestureLength) {
         if(d.y > 0 && dir != 'down') {
           dir = 'up'; // Up
-          snakeHead.src = snakeHeadRightImg.src;
+          snakeHead.src = snakeHeadUpImg.src;
         } else if (d.y < 0 && dir != 'up') {
           dir = 'down'; // Down
           snakeHead.src = snakeHeadBottomImg.src;
