@@ -63,7 +63,8 @@ newRecordWindowError.innerHTML = 'Nickname is incorrect.'
 newRecordWindowError.style.visibility = 'hidden';
 
 const newRecordWindowOk = document.createElement('button');
-newRecordWindowOk.innerHTML = 'OK.'
+newRecordWindowOk.id = 'button_ok'
+newRecordWindowOk.innerHTML = 'OK'
 
 const counterDiv = document.createElement('div');
 
@@ -329,7 +330,14 @@ function createGame() {
         newRecordWindowDiscription2.style.marginBottom = gameSize/100 * 2 + 'px';
       
         newRecordWindowInput.style.fontSize = gameSize/23 + 'px';
-      
+
+        newRecordWindowError.style.fontSize = gameSize/23 + 'px';   
+        
+        newRecordWindowOk.style.marginBottom = gameSize/100 * 2 + 'px';
+
+        newRecordWindowOk.style.width = gameSize/100 * 10 + 'px';
+        newRecordWindowOk.style.height = gameSize/100 * 5 + 'px';
+        newRecordWindowOk.style.fontSize = gameSize/23 + 'px';
 
         game.appendChild(newRecordWindow);
         newRecordWindow.appendChild(newRecordWindowTitle);
@@ -371,11 +379,20 @@ function createGame() {
             .catch( error => { console.error(error); } );
 
             function lockGetReady(recordsTable) {
+              let repeatingNick;
+              
               table = JSON.parse(recordsTable.result)
-              console.log(table)
-              let obj = {nick: newRecordWindowInputValue, record: counterObj.scores}
 
-              table.push(obj)
+              repeatingNick = table.map(el => el.nick).indexOf(newRecordWindowInputValue);
+
+              if (repeatingNick >= 0 && repeatingNick <= 10) {
+                if (table[repeatingNick].record < counterObj.scores) {
+                  table[repeatingNick].record = counterObj.scores;
+                }
+              } else {
+                let obj = {nick: newRecordWindowInputValue, record: counterObj.scores}
+                table.push(obj)
+              }
 
               table.sort(function (a, b) {
                 if (a.record < b.record) {
@@ -387,7 +404,9 @@ function createGame() {
                 return 0;
               });
 
-              table.pop();
+              if (table.length > 10) {
+                table.pop();
+              }
 
               let spUpdate = new URLSearchParams();
               spUpdate.append('f', 'UPDATE');

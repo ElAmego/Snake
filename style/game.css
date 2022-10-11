@@ -87,5 +87,12 @@
 
 #new_record_window_input {
   background-color: #B8FE4F;
+  font-family: "Undertale-Battle-Font";
+  border: none;
+}
+
+#button_ok {
+  background-color: #B8FE4F;
+  font-family: "Undertale-Battle-Font";
   border: none;
 }
