@@ -1,7 +1,16 @@
 "use strict"
 
-window.onload = function() {
-  const playGame = document.getElementById('play_game');
+const snakeHeadBottomImg = new Image();
+const snakeHeadLeftImg = new Image();
+const snakeHeadRightImg = new Image();
+const snakeHeadUpImg = new Image();
+const snakeBodyImg = new Image();
+const appleImg = new Image();
+const snakeHead = new Image();
+
+preload();
+
+const playGame = document.getElementById('play_game');
 const container = document.getElementById('container');
 const flexContainer = document.getElementById('flex_container');
 const exit = document.getElementById('exit');
@@ -186,11 +195,6 @@ function createGame() {
     }
   }
 
-  const snakeHeadImg = new Image();
-  const snakeBodyImg = new Image();
-  snakeHeadImg.src = 'img/snake_head_bottom.svg'
-  snakeBodyImg.src = 'img/snake_body.svg'
-
   // Apple class & svg
   class apple {
     constructor() {
@@ -213,9 +217,6 @@ function createGame() {
     }
   }
 
-  const appleImg = new Image();
-  appleImg.src = 'img/apple.svg';
-
   // Counter class
 
   class counter {
@@ -237,16 +238,16 @@ function createGame() {
   function direction(e) {
     if ((e.keyCode == 37 || e.keyCode == 65) && dir != 'right') {
       dir = 'left';
-      snakeHeadImg.src = 'img/snake_head_left.svg';
+      snakeHead.src = snakeHeadLeftImg.src;
     } else if ((e.keyCode == 38 || e.keyCode == 87) && dir != 'down') {
       dir = 'up'
-      snakeHeadImg.src = 'img/snake_head_up.svg';
+      snakeHead.src = snakeHeadUpImg.src;
     } else if ((e.keyCode == 39 || e.keyCode == 68) && dir != 'left') {
       dir = 'right'
-      snakeHeadImg.src = 'img/snake_head_right.svg';
+      snakeHead.src = snakeHeadRightImg.src;
     } else if ((e.keyCode == 40 || e.keyCode == 83) && dir != 'up') {
       dir = 'down'
-      snakeHeadImg.src = 'img/snake_head_bottom.svg';
+      snakeHead.src = snakeHeadBottomImg.src;
     }
   }
 
@@ -522,7 +523,7 @@ function createGame() {
     ctx.drawImage(appleImg, appleObj.x, appleObj.y, cell, cell)
 
     for(let i = 0; i < snakeObj.snake.length; i++) {
-      ctx.drawImage(i == 0 ? snakeHeadImg: snakeBodyImg, snakeObj.snake[i].x, snakeObj.snake[i].y, cell, cell)
+      ctx.drawImage(i == 0 ? snakeHead: snakeBodyImg, snakeObj.snake[i].x, snakeObj.snake[i].y, cell, cell)
     }
 
     let snakeX = snakeObj.snake[0].x;
@@ -562,4 +563,29 @@ function createGame() {
   game.appendChild(counterDiv)
   document.body.removeChild(container)
 }
+
+function preload() {
+  snakeHead.src = 'img/snake_head_bottom.svg';
+  snakeHeadBottomImg.src = 'img/snake_head_bottom.svg'
+  snakeHeadLeftImg.src = 'img/snake_head_left.svg'
+  snakeHeadRightImg.src = 'img/snake_head_right.svg'
+  snakeHeadUpImg.src = 'img/snake_head_up.svg'
+  snakeBodyImg.src = 'img/snake_body.svg'
+  appleImg.src = 'img/apple.svg';
+
+  snakeHead.style.visibility = 'hidden';
+  snakeHeadBottomImg.style.visibility = 'hidden';
+  snakeHeadLeftImg.style.visibility = 'hidden';
+  snakeHeadRightImg.style.visibility = 'hidden';
+  snakeHeadUpImg.style.visibility = 'hidden';
+  snakeBodyImg.style.visibility = 'hidden';
+  appleImg.style.visibility = 'hidden';
+
+  document.body.appendChild(snakeHead)
+  document.body.appendChild(snakeHeadBottomImg)
+  document.body.appendChild(snakeHeadLeftImg)
+  document.body.appendChild(snakeHeadRightImg)
+  document.body.appendChild(snakeHeadUpImg)
+  document.body.appendChild(snakeBodyImg)
+  document.body.appendChild(appleImg)
 }
