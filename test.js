@@ -1,10 +1,65 @@
 "use strict"
 
-const playGame = document.getElementById('play_game');
+window.onload = function() {
+  const playGame = document.getElementById('play_game');
 const container = document.getElementById('container');
+const flexContainer = document.getElementById('flex_container');
 const exit = document.getElementById('exit');
+const leaderBoardButton = document.getElementById('create_leader_board');
+const mainMenu = document.getElementById('main_menu')
+
+const canvas = document.createElement('canvas');
+canvas.id = 'canvas';
+
+const game = document.createElement('div');
+game.id = 'game';
+
+const end = document.createElement('div');
+end.id = 'end_Window';
+
+const title = document.createElement('div');
+title.id = 'title';
+title.innerHTML = 'You loose!'
+
+const endGameScores = document.createElement('div');
+endGameScores.style.fontFamily = 'Undertale-Battle-Font'
+
+const buttonAgain = document.createElement('div');
+buttonAgain.id = 'button_Again'
+buttonAgain.innerHTML = 'Replay';
+
+const buttonExit = document.createElement('div');
+buttonExit.id = 'exit';
+buttonExit.innerHTML = 'Exit';
+
+
+const newRecordWindow = document.createElement('div');
+newRecordWindow.id = 'new_Record_Window';
+
+const newRecordWindowTitle = document.createElement('div');
+newRecordWindowTitle.innerHTML = 'Congratulations!'
+
+const newRecordWindowDiscription1 = document.createElement('div');
+newRecordWindowDiscription1.innerHTML = 'You entered the top-10.'
+
+const newRecordWindowDiscription2 = document.createElement('div');
+newRecordWindowDiscription2.innerHTML = 'Enter your nickname. Nickname must includes 5 symbols.'
+newRecordWindowDiscription2.style.textAlign = 'center';
+
+const newRecordWindowInput = document.createElement('input');
+newRecordWindowInput.id = 'new_record_window_input'
+
+const newRecordWindowError = document.createElement('div');
+newRecordWindowError.innerHTML = 'Nickname is incorrect.'
+newRecordWindowError.style.visibility = 'hidden';
+
+const newRecordWindowOk = document.createElement('button');
+newRecordWindowOk.innerHTML = 'OK.'
+
+const counterDiv = document.createElement('div');
 
 playGame.addEventListener('click', createGame, false);
+playGame.addEventListener('touchStart', createGame, false);
 
 const soundEat = new Audio();
 soundEat.src = 'sounds/eat.mp3';
@@ -14,27 +69,8 @@ function createGame() {
 
   window.navigator.vibrate(200)
 
-  document.body.removeChild(container)
-
   const widthScreen =  window.innerWidth;
   const heightScreen = window.innerHeight;
-
-  const game = document.createElement('div');
-  game.id = 'game';
-
-  const end = document.createElement('div');
-  end.id = 'end_Window';
-
-  let title = document.createElement('div');
-  title.id = 'title';
-
-  let endGameScores = document.createElement('div');
-
-  let buttonAgain = document.createElement('div');
-  buttonAgain.id = 'button_Again'
-
-  let buttonExit = document.createElement('div');
-  buttonExit.id = 'exit';
 
   // Adaptive for Canvas
 
@@ -72,9 +108,6 @@ function createGame() {
     } else {
       alert('С таким-то экраном змейка явно не для вас.')
     }
-
-    end.style.width = gameSize/100 * 60 + 'px';
-    end.style.maxHeight = gameSize/100 * 60 + 'px';
   }
 
   if (widthScreen <= heightScreen) {
@@ -101,15 +134,14 @@ function createGame() {
     } else if (widthScreen < 1440 && widthScreen >= 1242) {
       gameSize = 1200;
     }
-
-    end.style.width = gameSize/100 * 60 + 'px';
-    end.style.maxHeight = gameSize/100 * 60 + 'px';
   }
 
-  // Сanvas
+  end.style.width = gameSize/100 * 60 + 'px';
+  end.style.maxHeight = gameSize/100 * 60 + 'px';
+  newRecordWindow.style.width = gameSize/100 * 80 + 'px';
+  newRecordWindow.style.maxHeight = gameSize/100 * 80 + 'px';
 
-  const canvas = document.createElement('canvas');
-  canvas.id = 'canvas';
+  // Сanvas
   canvas.setAttribute('width', gameSize)
   canvas.setAttribute('height', gameSize)
   let ctx = canvas.getContext('2d');
@@ -196,10 +228,6 @@ function createGame() {
     }
   }
 
-  const counterDiv = document.createElement('div');
-  counterDiv.style.fontSize = gameSize/15 + 'px';
-  counterDiv.style.fontFamily = 'Undertale-Battle-Font'
-
   // Control
 
   document.addEventListener('keydown', direction);
@@ -222,114 +250,162 @@ function createGame() {
     }
   }
 
-  // Create objects
-
-  let snakeObj = new snake(7*cell, 7*cell)
-  let appleObj = new apple();
-  let counterObj = new counter(0);
-
-  // Game
-
-  function drawGame() {
-    ctx.beginPath();
-    ctx.fillStyle = ('#674D3D')
-    ctx.fillRect(0, 0, gameSize, gameSize);
-    ctx.stroke();
-
-    for (let i = 1; i < 15; i++) {
-      ctx.beginPath();
-      ctx.moveTo((gameSize/15)*i, 0)
-      ctx.lineTo((gameSize/15)*i, gameSize)
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.moveTo(0, (gameSize/15)*i)
-      ctx.lineTo(gameSize, (gameSize/15)*i)
-      ctx.stroke();
-    }
-
-    ctx.drawImage(appleImg, appleObj.x, appleObj.y, cell, cell)
-
-    for(let i = 0; i < snakeObj.snake.length; i++) {
-      ctx.drawImage(i == 0 ? snakeHeadImg: snakeBodyImg, snakeObj.snake[i].x, snakeObj.snake[i].y, cell, cell)
-    }
-
-    let snakeX = snakeObj.snake[0].x;
-    let snakeY = snakeObj.snake[0].y;
-
-    if(snakeX == appleObj.x && snakeY == appleObj.y) {
-      clickSound()
-      appleObj.new();
-      counterObj.scores += 1;
-    } else {
-      snakeObj.snake.pop();
-    }
-
-    if (dir == 'left') snakeX -= cell;
-    if (dir == 'right') snakeX += cell;
-    if (dir == 'up') snakeY -= cell;
-    if (dir == 'down') snakeY += cell;
-
-    let newHead = {
-      x: snakeX,
-      y: snakeY,
-    }
-
-    snakeObj.outwardField(snakeX, snakeY);
-
-    snakeObj.eatTail(newHead, snakeObj.snake);
-
-    snakeObj.snake.unshift(newHead);
-
-    counterObj.update();
-  }
-
   // Pop-up window after loose
 
   function endGame() {
-    title.innerHTML = 'You loose!'
+    let table;
+    let newRecordWindowInputValue;
+    let error;
+    let randomPassword = Math.random();
+
+    buttonAgain.addEventListener('touchstart', again, false);
+    buttonAgain.addEventListener('click', again, false);
+    buttonExit.addEventListener('touchstart', exit, false);
+    buttonExit.addEventListener('click', exit, false);
+    
     title.style.fontSize = gameSize/12 + 'px';
 
     endGameScores.innerHTML = `Your scores: ${counterObj.scores}`;
     endGameScores.style.fontSize = gameSize/20 + 'px';
-    endGameScores.style.fontFamily = 'Undertale-Battle-Font'
     
-    buttonAgain.innerHTML = 'Replay';
     buttonAgain.style.margin = gameSize/30 + 'px';
     buttonAgain.style.fontSize = gameSize/15 + 'px';
 
-    buttonExit.innerHTML = 'Exit';
     buttonExit.style.fontSize = gameSize/15 + 'px';
     buttonExit.style.marginBottom = gameSize/30 + 'px';
 
-    buttonAgain.addEventListener('touchstart', again, false);
-    buttonAgain.addEventListener('click', again, false);
+    const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
+    let spRead = new URLSearchParams();
+    spRead.append('f', 'READ');
+    spRead.append('n', 'AMELCHENKO_SNAKE_LEADERBOARD');
+
+    fetch(ajaxHandlerScript, { method: 'post', body: spRead } )
+    .then( response => response.json() )
+    .then( info => { leaderBoard(JSON.parse(info.result) ) } )
+    .catch( error => { console.error(error); } );
 
     function again() {
       window.navigator.vibrate(200)
 
-      document.body.removeChild(end);
+      game.removeChild(end);
 
       appleObj.new();
       snakeObj.replay();
 
+      buttonAgain.removeEventListener('touchstart', again, false);
+      buttonAgain.removeEventListener('click', again, false);
+      buttonExit.removeEventListener('touchstart', exit, false);
+      buttonExit.removeEventListener('click', exit, false);
+
       interval = setInterval(drawGame, 100)
     }
-
-    buttonExit.addEventListener('touchstart', exit, false);
-    buttonExit.addEventListener('click', exit, false);
 
     function exit() {
       window.navigator.vibrate(200)
       
+      game.removeChild(end);
       document.body.removeChild(game);
-      document.body.removeChild(end);
       document.body.appendChild(container)
+    }
+
+    function leaderBoard(records) {
+      let scores = counterObj.scores;
+      if (scores > records[9].record) {
+        newRecordWindowInput.addEventListener('blur', validInput, false);
+        newRecordWindowOk.addEventListener('click', accept, false);
+        newRecordWindowOk.addEventListener('touchStart', accept, false);
+
+        newRecordWindowTitle.style.fontSize = gameSize/13 + 'px';
+
+        newRecordWindowDiscription1.style.fontSize = gameSize/23 + 'px';
+        newRecordWindowDiscription1.style.margin = gameSize/100 * 2 + 'px';
+      
+        newRecordWindowDiscription2.style.fontSize = gameSize/23 + 'px';
+        newRecordWindowDiscription2.style.marginBottom = gameSize/100 * 2 + 'px';
+      
+        newRecordWindowInput.style.fontSize = gameSize/23 + 'px';
+      
+
+        game.appendChild(newRecordWindow);
+        newRecordWindow.appendChild(newRecordWindowTitle);
+        newRecordWindow.appendChild(newRecordWindowDiscription1);
+        newRecordWindow.appendChild(newRecordWindowDiscription2);
+        newRecordWindow.appendChild(newRecordWindowInput);
+        newRecordWindow.appendChild(newRecordWindowError);
+        newRecordWindow.appendChild(newRecordWindowOk);
+      
+        function validInput() {
+          newRecordWindowInputValue = newRecordWindowInput.value;
+      
+          if(newRecordWindowInputValue.length === 0 || newRecordWindowInputValue.length > 5 || newRecordWindowInputValue[0] === " " || newRecordWindowInputValue[newRecordWindowInputValue.length - 1] === " ") {
+            newRecordWindowError.style.visibility = 'visible'
+            newRecordWindowError.style.color = 'red';
+            error++;
+          } else {
+            newRecordWindowError.style.visibility = 'hidden';
+            error = 0;      
+          }
+
+          return error;
+        }
+
+        function accept() {
+          let error = 0;
+          error+=validInput()
+          if (error == 0) {
+            const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
+
+            let spLockget = new URLSearchParams();
+            spLockget.append('f', 'LOCKGET');
+            spLockget.append('n', 'AMELCHENKO_SNAKE_LEADERBOARD');
+            spLockget.append('p', randomPassword)
+
+            fetch(ajaxHandlerScript, { method: 'post', body: spLockget })
+            .then( response => response.json() )
+            .then( data => { lockGetReady(data) } )
+            .catch( error => { console.error(error); } );
+
+            function lockGetReady(recordsTable) {
+              table = JSON.parse(recordsTable.result)
+              console.log(table)
+              let obj = {nick: newRecordWindowInputValue, record: counterObj.scores}
+
+              table.push(obj)
+
+              table.sort(function (a, b) {
+                if (a.record < b.record) {
+                  return 1;
+                }
+                if (a.record > b.record) {
+                  return -1;
+                }
+                return 0;
+              });
+
+              table.pop();
+
+              let spUpdate = new URLSearchParams();
+              spUpdate.append('f', 'UPDATE');
+              spUpdate.append('n', 'AMELCHENKO_SNAKE_LEADERBOARD');
+              spUpdate.append('p', randomPassword)
+              spUpdate.append('v', JSON.stringify(table))
+
+              fetch(ajaxHandlerScript, { method: 'post', body: spUpdate })
+              .then( response => response.json() )
+              .then( data => { console.log(data) } )
+              .catch( error => { console.error(error); } );
+            }
+            newRecordWindowOk.removeEventListener('click', accept, false);
+            newRecordWindowOk.removeEventListener('touchStart', accept, false);
+            game.removeChild(newRecordWindow)
+          }
+        }
+      }
     }
     
     clearInterval(interval)
 
-    document.body.appendChild(end);
+    game.appendChild(end);
     end.appendChild(title);
     end.appendChild(endGameScores);
     end.appendChild(buttonAgain);
@@ -414,8 +490,76 @@ function createGame() {
     soundEat.play();
   }
 
+  // Create objects
+
+  let snakeObj = new snake(7*cell, 7*cell)
+  let appleObj = new apple();
+  let counterObj = new counter(0);
+
+  counterDiv.style.fontSize = gameSize/15 + 'px';
+  counterDiv.style.fontFamily = 'Undertale-Battle-Font'
+
+  // Game
+
+  function drawGame() {
+    ctx.beginPath();
+    ctx.fillStyle = ('#674D3D')
+    ctx.fillRect(0, 0, gameSize, gameSize);
+    ctx.stroke();
+
+    for (let i = 1; i < 15; i++) {
+      ctx.beginPath();
+      ctx.moveTo((gameSize/15)*i, 0)
+      ctx.lineTo((gameSize/15)*i, gameSize)
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0, (gameSize/15)*i)
+      ctx.lineTo(gameSize, (gameSize/15)*i)
+      ctx.stroke();
+    }
+
+    ctx.drawImage(appleImg, appleObj.x, appleObj.y, cell, cell)
+
+    for(let i = 0; i < snakeObj.snake.length; i++) {
+      ctx.drawImage(i == 0 ? snakeHeadImg: snakeBodyImg, snakeObj.snake[i].x, snakeObj.snake[i].y, cell, cell)
+    }
+
+    let snakeX = snakeObj.snake[0].x;
+    let snakeY = snakeObj.snake[0].y;
+
+    if(snakeX == appleObj.x && snakeY == appleObj.y) {
+      clickSound()
+      appleObj.new();
+      counterObj.scores += 1;
+    } else {
+      snakeObj.snake.pop();
+    }
+
+    if (dir == 'left') snakeX -= cell;
+    if (dir == 'right') snakeX += cell;
+    if (dir == 'up') snakeY -= cell;
+    if (dir == 'down') snakeY += cell;
+
+    let newHead = {
+      x: snakeX,
+      y: snakeY,
+    }
+
+    snakeObj.outwardField(snakeX, snakeY);
+
+    snakeObj.eatTail(newHead, snakeObj.snake);
+
+    snakeObj.snake.unshift(newHead);
+
+    counterObj.update();
+  }
+
+  drawGame()
   let interval = setInterval(drawGame, 100);
   document.body.appendChild(game)
   game.appendChild(canvas)
   game.appendChild(counterDiv)
+  document.body.removeChild(container)
+}
 }

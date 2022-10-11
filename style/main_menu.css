@@ -41,7 +41,7 @@
   background-color: #54aa3a;
 }
 
-#leader_board {
+#create_leader_board {
   margin: 10px;
   padding: 5px;
   border: solid 2px #B8FE4F;
@@ -54,7 +54,7 @@
   text-align: center;
 }
 
-#leader_board:active {
+#create_leader_board:active {
   background-color: #54aa3a;
 }
 
@@ -90,7 +90,7 @@
     font-size: 25px;
   }
 
-  #leader_board {
+  #create_leader_board {
     width: 180px;
     font-size: 25px;
   }
@@ -111,7 +111,7 @@
     font-size: 20px;
   }
 
-  #leader_board {
+  #create_leader_board {
     width: 200px;
     font-size: 20px;
   }

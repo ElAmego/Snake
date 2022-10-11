@@ -1,0 +1,9 @@
+#leaders_table {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 500px;
+  border: solid 3px #B8FE4F;
+background-color: #69D949;
+}

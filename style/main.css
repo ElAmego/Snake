@@ -1,5 +1,6 @@
 @import url(main_menu.css);
 @import url(game.css);
+@import url(leader_board.css);
 
 * {
   margin: 0;
