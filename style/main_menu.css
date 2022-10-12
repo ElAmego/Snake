@@ -13,6 +13,7 @@
 
 #logo {
   padding: 0 10px;
+
   font-size: 72px;
   font-family: "Undertale-Battle-Font";
   text-align: center;
@@ -24,7 +25,7 @@
   align-items: center;
 }
 
-#play_game {
+#create_game_button {
   margin: 10px;
   padding: 5px;
   border: solid 2px #B8FE4F;
@@ -37,11 +38,11 @@
   text-align: center;
 }
 
-#play_game:active {
+#create_game_button:active {
   background-color: #54aa3a;
 }
 
-#create_leader_board {
+#create_leaderboard_button {
   margin: 10px;
   padding: 5px;
   border: solid 2px #B8FE4F;
@@ -54,7 +55,7 @@
   text-align: center;
 }
 
-#create_leader_board:active {
+#create_leaderboard_button:active {
   background-color: #54aa3a;
 }
 
@@ -85,12 +86,12 @@
     font-size: 36px;
   }
 
-  #play_game {
+  #create_game_button {
     width: 180px;
     font-size: 25px;
   }
 
-  #create_leader_board {
+  #create_leaderboard_button {
     width: 180px;
     font-size: 25px;
   }
@@ -106,12 +107,12 @@
     font-size: 30px;
   }
 
-  #play_game {
+  #create_game_button {
     width: 200px;
     font-size: 20px;
   }
 
-  #create_leader_board {
+  #create_leaderboard_button {
     width: 200px;
     font-size: 20px;
   }

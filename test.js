@@ -1,5 +1,6 @@
 "use strict"
 
+// Preload components.
 const snakeHeadBottomImg = new Image();
 const snakeHeadLeftImg = new Image();
 const snakeHeadRightImg = new Image();
@@ -10,72 +11,119 @@ const snakeHead = new Image();
 
 preload();
 
-const playGame = document.getElementById('play_game');
 const container = document.getElementById('container');
 const flexContainer = document.getElementById('flex_container');
-const exit = document.getElementById('exit');
-const leaderBoardButton = document.getElementById('create_leader_board');
 const mainMenu = document.getElementById('main_menu')
+const createGameButton = document.getElementById('create_game_button');
+const createLeaderboardButton = document.getElementById('create_leaderboard_button');
 
+// Playing field components.
 const canvas = document.createElement('canvas');
 canvas.id = 'canvas';
 
-const game = document.createElement('div');
-game.id = 'game';
+const playingField = document.createElement('div');
+playingField.id = 'playing_field';
 
-const end = document.createElement('div');
-end.id = 'end_Window';
+const playingFieldCounter = document.createElement('div');
 
-const title = document.createElement('div');
-title.id = 'title';
-title.innerHTML = 'You loose!'
+// Ending window components.
+const endWindow = document.createElement('div');
+endWindow.id = 'end_window';
 
-const endGameScores = document.createElement('div');
-endGameScores.style.fontFamily = 'Undertale-Battle-Font'
+const endWindowTitle = document.createElement('div');
+endWindowTitle.id = 'end_window_title';
+endWindowTitle.innerHTML = 'You loose!';
 
-const buttonAgain = document.createElement('div');
-buttonAgain.id = 'button_Again'
-buttonAgain.innerHTML = 'Replay';
+const endWindowScores = document.createElement('div');
+endWindowScores.id = 'end_window_scores';
 
-const buttonExit = document.createElement('div');
-buttonExit.id = 'exit';
-buttonExit.innerHTML = 'Exit';
+const endWindowButtonAgain = document.createElement('div');
+endWindowButtonAgain.id = 'end_window_button_again';
+endWindowButtonAgain.innerHTML = 'Replay';
 
+const endWindowButtonExit = document.createElement('div');
+endWindowButtonExit.id = 'end_window_button_exit';  //exit
+endWindowButtonExit.innerHTML = 'Exit';
 
+// Window if player set new record.
 const newRecordWindow = document.createElement('div');
-newRecordWindow.id = 'new_Record_Window';
+newRecordWindow.id = 'new_record_window';
 
 const newRecordWindowTitle = document.createElement('div');
-newRecordWindowTitle.innerHTML = 'Congratulations!'
+newRecordWindowTitle.innerHTML = 'Congratulations!';
 
 const newRecordWindowDiscription1 = document.createElement('div');
-newRecordWindowDiscription1.innerHTML = 'You entered the top-10.'
+newRecordWindowDiscription1.innerHTML = 'You entered the top-10.';
 
 const newRecordWindowDiscription2 = document.createElement('div');
+newRecordWindowDiscription2.id = 'new_record_window_discription_2';
 newRecordWindowDiscription2.innerHTML = 'Enter your nickname. Nickname must includes 5 symbols.'
-newRecordWindowDiscription2.style.textAlign = 'center';
 
 const newRecordWindowInput = document.createElement('input');
 newRecordWindowInput.id = 'new_record_window_input'
 
 const newRecordWindowError = document.createElement('div');
-newRecordWindowError.innerHTML = 'Nickname is incorrect.'
-newRecordWindowError.style.visibility = 'hidden';
+newRecordWindowError.id = 'new_record_window_error';
+newRecordWindowError.innerHTML = 'Nickname is incorrect.';
 
-const newRecordWindowOk = document.createElement('button');
-newRecordWindowOk.id = 'button_ok'
-newRecordWindowOk.innerHTML = 'OK'
+const newRecordWindowButtonOk = document.createElement('button');
+newRecordWindowButtonOk.id = 'button_ok';
+newRecordWindowButtonOk.innerHTML = 'OK';
 
-const counterDiv = document.createElement('div');
+// Leaderboard components.
+const leaderboard = document.createElement('div');
+leaderboard.id = 'leaderboard';
 
-playGame.addEventListener('click', createGame, false);
-playGame.addEventListener('touchStart', createGame, false);
+const leaderboardTitle = document.createElement('div');
+leaderboardTitle.id = 'leaderboard_title';
+leaderboardTitle.innerHTML = ('Leaderboard');
+
+const leaderboardResults = document.createElement('div');
+leaderboardResults.id = 'leaderboard_results';
+
+const leaderboardNicknamesTitle = document.createElement('div');
+leaderboardNicknamesTitle.id = 'leaderboard_nicknames_title';
+leaderboardNicknamesTitle.innerHTML = ('Nick');
+
+const leaderboardNicknames = document.createElement('div');
+leaderboardNicknames.id = 'nicknames';
+
+const leaderboardScores = document.createElement('div');
+leaderboardScores.id = 'scores_id';
+
+const leaderboardScoresTitle = document.createElement('div');
+leaderboardScoresTitle.id = 'leaderboard_scores_title';
+leaderboardScoresTitle.innerHTML = ('Scores');
+
+const leaderboardButtonExit = document.createElement('button');
+leaderboardButtonExit.id = 'leaderboard_button_exit';
+leaderboardButtonExit.innerHTML = ('Close');
+
+for (let i = 1; i <= 10; i++) {
+  let nickname = document.createElement('div');
+  nickname.className = 'nickname';
+
+  leaderboardNicknames.appendChild(nickname)
+}
+
+for (let i = 1; i <= 10; i++) {
+  let scores = document.createElement('div');
+  scores.className = 'scores_class';
+
+  leaderboardScores.appendChild(scores)
+}
+
+createGameButton.addEventListener('click', createGame, false);
+createGameButton.addEventListener('touchStart', createGame, false);
+createLeaderboardButton.addEventListener('click', createLeaderboard, false);
+createLeaderboardButton.addEventListener('touchStart', createLeaderboard, false);
+leaderboardButtonExit.addEventListener('click', closeLeaderboard, false);
+leaderboardButtonExit.addEventListener('touchStart', closeLeaderboard, false);
 
 const soundEat = new Audio();
 soundEat.src = 'sounds/eat.mp3';
 
 function createGame() {
-  clickSoundInit();
 
   window.navigator.vibrate(200)
 
@@ -150,8 +198,8 @@ function createGame() {
     }
   }
 
-  end.style.width = gameSize/100 * 60 + 'px';
-  end.style.maxHeight = gameSize/100 * 60 + 'px';
+  endWindow.style.width = gameSize/100 * 60 + 'px';
+  endWindow.style.maxHeight = gameSize/100 * 60 + 'px';
   newRecordWindow.style.width = gameSize/100 * 80 + 'px';
   newRecordWindow.style.maxHeight = gameSize/100 * 80 + 'px';
 
@@ -230,7 +278,7 @@ function createGame() {
     }
 
     update() {
-      counterDiv.innerHTML = `Scores: ${this.scores}`;    
+      playingFieldCounter.innerHTML = `Scores: ${this.scores}`;    
     }
   }
 
@@ -264,21 +312,21 @@ function createGame() {
     let error;
     let randomPassword = Math.random();
 
-    buttonAgain.addEventListener('touchstart', again, false);
-    buttonAgain.addEventListener('click', again, false);
-    buttonExit.addEventListener('touchstart', exit, false);
-    buttonExit.addEventListener('click', exit, false);
+    endWindowButtonAgain.addEventListener('touchstart', again, false);
+    endWindowButtonAgain.addEventListener('click', again, false);
+    endWindowButtonExit.addEventListener('touchstart', exit, false);
+    endWindowButtonExit.addEventListener('click', exit, false);
     
-    title.style.fontSize = gameSize/12 + 'px';
+    endWindowTitle.style.fontSize = gameSize/12 + 'px';
 
-    endGameScores.innerHTML = `Your scores: ${counterObj.scores}`;
-    endGameScores.style.fontSize = gameSize/20 + 'px';
+    endWindowScores.innerHTML = `Your scores: ${counterObj.scores}`;
+    endWindowScores.style.fontSize = gameSize/20 + 'px';
     
-    buttonAgain.style.margin = gameSize/30 + 'px';
-    buttonAgain.style.fontSize = gameSize/15 + 'px';
+    endWindowButtonAgain.style.margin = gameSize/30 + 'px';
+    endWindowButtonAgain.style.fontSize = gameSize/15 + 'px';
 
-    buttonExit.style.fontSize = gameSize/15 + 'px';
-    buttonExit.style.marginBottom = gameSize/30 + 'px';
+    endWindowButtonExit.style.fontSize = gameSize/15 + 'px';
+    endWindowButtonExit.style.marginBottom = gameSize/30 + 'px';
 
     const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
     let spRead = new URLSearchParams();
@@ -287,21 +335,21 @@ function createGame() {
 
     fetch(ajaxHandlerScript, { method: 'post', body: spRead } )
     .then( response => response.json() )
-    .then( info => { leaderBoard(JSON.parse(info.result) ) } )
+    .then( info => { isNewRecord(JSON.parse(info.result) ) } )
     .catch( error => { console.error(error); } );
 
     function again() {
       window.navigator.vibrate(200)
 
-      game.removeChild(end);
+      playingField.removeChild(endWindow);
 
       appleObj.new();
       snakeObj.replay();
 
-      buttonAgain.removeEventListener('touchstart', again, false);
-      buttonAgain.removeEventListener('click', again, false);
-      buttonExit.removeEventListener('touchstart', exit, false);
-      buttonExit.removeEventListener('click', exit, false);
+      endWindowButtonAgain.removeEventListener('touchstart', again, false);
+      endWindowButtonAgain.removeEventListener('click', again, false);
+      endWindowButtonExit.removeEventListener('touchstart', exit, false);
+      endWindowButtonExit.removeEventListener('click', exit, false);
 
       interval = setInterval(drawGame, 100)
     }
@@ -309,17 +357,22 @@ function createGame() {
     function exit() {
       window.navigator.vibrate(200)
       
-      game.removeChild(end);
-      document.body.removeChild(game);
-      document.body.appendChild(container)
+      playingField.removeChild(endWindow);
+      document.body.removeChild(playingField);
+      document.body.appendChild(container);
+
+      endWindowButtonAgain.removeEventListener('touchstart', again, false);
+      endWindowButtonAgain.removeEventListener('click', again, false);
+      endWindowButtonExit.removeEventListener('touchstart', exit, false);
+      endWindowButtonExit.removeEventListener('click', exit, false);
     }
 
-    function leaderBoard(records) {
+    function isNewRecord(records) {
       let scores = counterObj.scores;
       if (scores > records[9].record) {
         newRecordWindowInput.addEventListener('blur', validInput, false);
-        newRecordWindowOk.addEventListener('click', accept, false);
-        newRecordWindowOk.addEventListener('touchStart', accept, false);
+        newRecordWindowButtonOk.addEventListener('click', accept, false);
+        newRecordWindowButtonOk.addEventListener('touchStart', accept, false);
 
         newRecordWindowTitle.style.fontSize = gameSize/13 + 'px';
 
@@ -333,19 +386,19 @@ function createGame() {
 
         newRecordWindowError.style.fontSize = gameSize/23 + 'px';   
         
-        newRecordWindowOk.style.marginBottom = gameSize/100 * 2 + 'px';
+        newRecordWindowButtonOk.style.marginBottom = gameSize/100 * 2 + 'px';
 
-        newRecordWindowOk.style.width = gameSize/100 * 10 + 'px';
-        newRecordWindowOk.style.height = gameSize/100 * 5 + 'px';
-        newRecordWindowOk.style.fontSize = gameSize/23 + 'px';
+        newRecordWindowButtonOk.style.width = gameSize/100 * 10 + 'px';
+        newRecordWindowButtonOk.style.height = gameSize/100 * 5 + 'px';
+        newRecordWindowButtonOk.style.fontSize = gameSize/23 + 'px';
 
-        game.appendChild(newRecordWindow);
+        playingField.appendChild(newRecordWindow);
         newRecordWindow.appendChild(newRecordWindowTitle);
         newRecordWindow.appendChild(newRecordWindowDiscription1);
         newRecordWindow.appendChild(newRecordWindowDiscription2);
         newRecordWindow.appendChild(newRecordWindowInput);
         newRecordWindow.appendChild(newRecordWindowError);
-        newRecordWindow.appendChild(newRecordWindowOk);
+        newRecordWindow.appendChild(newRecordWindowButtonOk);
       
         function validInput() {
           newRecordWindowInputValue = newRecordWindowInput.value;
@@ -419,9 +472,10 @@ function createGame() {
               .then( data => { console.log(data) } )
               .catch( error => { console.error(error); } );
             }
-            newRecordWindowOk.removeEventListener('click', accept, false);
-            newRecordWindowOk.removeEventListener('touchStart', accept, false);
-            game.removeChild(newRecordWindow)
+
+            newRecordWindowButtonOk.removeEventListener('click', accept, false);
+            newRecordWindowButtonOk.removeEventListener('touchStart', accept, false);
+            playingField.removeChild(newRecordWindow)
           }
         }
       }
@@ -429,11 +483,11 @@ function createGame() {
     
     clearInterval(interval)
 
-    game.appendChild(end);
-    end.appendChild(title);
-    end.appendChild(endGameScores);
-    end.appendChild(buttonAgain);
-    end.appendChild(buttonExit);
+    playingField.appendChild(endWindow);
+    endWindow.appendChild(endWindowTitle);
+    endWindow.appendChild(endWindowScores);
+    endWindow.appendChild(endWindowButtonAgain);
+    endWindow.appendChild(endWindowButtonExit);
   }
 
   // Control by touchscreen
@@ -504,24 +558,14 @@ function createGame() {
     }
   }
 
-  function clickSoundInit() {
-    soundEat.play(); 
-    soundEat.pause(); 
-  }
-
-  function clickSound() {
-    soundEat.currentTime=0;
-    soundEat.play();
-  }
-
   // Create objects
 
   let snakeObj = new snake(7*cell, 7*cell)
   let appleObj = new apple();
   let counterObj = new counter(0);
 
-  counterDiv.style.fontSize = gameSize/15 + 'px';
-  counterDiv.style.fontFamily = 'Undertale-Battle-Font'
+  playingFieldCounter.style.fontSize = gameSize/15 + 'px';
+  playingFieldCounter.style.fontFamily = 'Undertale-Battle-Font'
 
   // Game
 
@@ -581,10 +625,62 @@ function createGame() {
 
   drawGame()
   let interval = setInterval(drawGame, 100);
-  document.body.appendChild(game)
-  game.appendChild(canvas)
-  game.appendChild(counterDiv)
+  document.body.appendChild(playingField)
+  playingField.appendChild(canvas)
+  playingField.appendChild(playingFieldCounter)
   document.body.removeChild(container)
+}
+
+function createLeaderboard() {
+  const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
+  let spReadLeaderboard = new URLSearchParams();
+  spReadLeaderboard.append('f', 'READ');
+  spReadLeaderboard.append('n', 'AMELCHENKO_SNAKE_LEADERBOARD');
+
+  fetch(ajaxHandlerScript, { method: 'post', body: spReadLeaderboard } )
+  .then( response => response.json() )
+  .then( data => { buildLeaderBoard(JSON.parse(data.result) ) } )
+  .catch( error => { console.error(error); } );
+
+  function buildLeaderBoard(leaderboardArr) {
+    let nicknameDiv = document.getElementsByClassName('nickname');
+    let scoresDiv = document.getElementsByClassName('scores_class');
+
+    for (let i = 0; i <= 9; i++) {
+      nicknameDiv[i].innerHTML = (leaderboardArr[i].nick)
+    }
+
+    for (let i = 0; i <= 9; i++) {
+      scoresDiv[i].innerHTML = (leaderboardArr[i].record)
+    }
+  }
+
+  flexContainer.removeChild(mainMenu);
+  flexContainer.appendChild(leaderboard);
+  leaderboard.appendChild(leaderboardTitle);
+  leaderboard.appendChild(leaderboardResults);
+  leaderboard.appendChild(leaderboardButtonExit)
+  leaderboardResults.appendChild(leaderboardNicknamesTitle)
+  leaderboardNicknamesTitle.appendChild(leaderboardNicknames)
+  leaderboardScoresTitle.appendChild(leaderboardScores)
+  leaderboardResults.appendChild(leaderboardScoresTitle)
+}
+
+function closeLeaderboard() {
+  flexContainer.appendChild(mainMenu);
+  flexContainer.removeChild(leaderboard);
+  leaderboard.removeChild(leaderboardTitle);
+  leaderboard.removeChild(leaderboardResults);
+  leaderboard.removeChild(leaderboardButtonExit)
+  leaderboardResults.removeChild(leaderboardNicknamesTitle)
+  leaderboardNicknamesTitle.removeChild(leaderboardNicknames)
+  leaderboardScoresTitle.removeChild(leaderboardScores)
+  leaderboardResults.removeChild(leaderboardScoresTitle)
+}
+
+function clickSound() {
+  soundEat.currentTime=0;
+  soundEat.play();
 }
 
 function preload() {

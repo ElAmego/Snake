@@ -1,11 +1,11 @@
-#game {
+#playing_field {
   position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
 
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
   transform: translate(-50%, -50%);
 }
 
@@ -15,10 +15,10 @@
   background-color: #674D3D;
 }
 
-#end_Window {
+#end_window {
   position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
 
   display: flex;
   flex-direction: column;
@@ -31,16 +31,20 @@
   background-color: #69D949;
 }
 
-#title {
+#end_window_scores {
+  font-family: "Undertale-Battle-Font";
+}
+
+#end_window_title {
   margin: 10px;
 
   font-family: "Undertale-Battle-Font";
 }
 
-#new_Record_Window {
+#new_record_window {
   position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
 
   display: flex;
   flex-direction: column;
@@ -55,7 +59,11 @@
   font-family: "Undertale-Battle-Font";
 }
 
-#button_Again {
+#new_record_window_discription_2 {
+  text-align: center;
+}
+
+#end_window_button_again {
   padding: 2px 10px;
   border: solid 3px #B8FE4F;
   width: auto;
@@ -66,14 +74,14 @@
   text-align: center;
 }
 
-#button_Again:active {
+#end_window_button_again:active {
   background-color: #54aa3a;
 }
 
-#exit {
+#end_window_button_exit {
   padding: 2px 10px;
-  width: auto;
   border: solid 3px #B8FE4F;
+  width: auto;
   
   cursor: pointer;
 
@@ -81,18 +89,26 @@
   text-align: center;
 }
 
-#exit:active {
+#end_window_button_exit:active {
   background-color: #54aa3a;
 }
 
 #new_record_window_input {
-  background-color: #B8FE4F;
-  font-family: "Undertale-Battle-Font";
   border: none;
+
+  background-color: #B8FE4F;
+  
+  font-family: "Undertale-Battle-Font";
+}
+
+#new_record_window_error {
+  visibility: hidden;
 }
 
 #button_ok {
-  background-color: #B8FE4F;
-  font-family: "Undertale-Battle-Font";
   border: none;
+
+  background-color: #B8FE4F;
+  
+  font-family: "Undertale-Battle-Font";
 }
