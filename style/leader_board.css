@@ -108,22 +108,78 @@
 
 @media (min-height: 320px) and (max-height: 460px) {
   #leaderboard_title {
-    font-size: 30px;
+    font-size: 20px;
   }
 
   #leaderboard_nicknames_title {
-    font-size: 30px;
+    font-size: 18px;
   }
 
-  #leaderboard_nicknames_scores {
-    font-size: 30px;
+  #leaderboard_scores_title {
+    font-size: 18px;
   }
 
   .nickname {
-    font-size: 16px;
+    font-size: 10px;
   }
 
   .scores_class {
-    font-size: 16px;
+    font-size: 10px;
+  }
+
+  #leaderboard_button_exit {
+    margin-bottom: 5px;
+    width: 100px;
+    height: 20px;
+
+    font-size: 15px;
+  }
+}
+
+@media (min-height: 250px) and (max-height: 320px) {
+  #leaderboard_title {
+    margin-bottom: 0;
+    padding: 0;
+
+    font-size: 18px;
+  }
+
+  #leaderboard_nicknames_title {
+    margin-bottom: 2px;
+
+    font-size: 15px;
+  }
+
+  #leaderboard_scores_title {
+    margin-bottom: 2px;
+
+    font-size: 15px;
+  }
+  #nicknames {
+    margin-top: 5px;
+  }
+  
+  .nickname {
+    margin-bottom: 2px;
+
+    font-size: 10px;
+  }
+
+  #scores_id {
+    margin-top: 5px;
+  }
+
+  .scores_class {
+    margin-bottom: 2px;
+
+    font-size: 10px;
+  }
+
+  #leaderboard_button_exit {
+    margin-bottom: 5px;
+    width: 50px;
+    height: 10px;
+
+    font-size: 10px;
   }
 }
