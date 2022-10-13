@@ -103,3 +103,27 @@
   font-size: 18px;
   font-family: "Undertale-Battle-Font";
 }
+
+/* Media quaries */
+
+@media (min-height: 320px) and (max-height: 460px) {
+  #leaderboard_title {
+    font-size: 30px;
+  }
+
+  #leaderboard_nicknames_title {
+    font-size: 30px;
+  }
+
+  #leaderboard_nicknames_scores {
+    font-size: 30px;
+  }
+
+  .nickname {
+    font-size: 16px;
+  }
+
+  .scores_class {
+    font-size: 16px;
+  }
+}

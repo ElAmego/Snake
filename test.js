@@ -1,138 +1,139 @@
 "use strict"
 
 // Preload components.
-const snakeHeadBottomImg = new Image();
-const snakeHeadLeftImg = new Image();
-const snakeHeadRightImg = new Image();
-const snakeHeadUpImg = new Image();
-const snakeBodyImg = new Image();
-const appleImg = new Image();
-const snakeHead = new Image();
+const snakeHeadBottomImg = new Image(); // Image snakeHeadBottomImg for preload.
+const snakeHeadLeftImg = new Image(); // Image snakeHeadLeftImg for preload.
+const snakeHeadRightImg = new Image(); // Image snakeHeadRightImg for preload.
+const snakeHeadUpImg = new Image(); // Image snakeHeadUpImg for preload.
+const snakeBodyImg = new Image(); // Image snakeBodyImg for preload.
+const appleImg = new Image(); // Image appleImg for preload.
+const snakeHead = new Image(); // Image snakeHead for preload.
 
 preload();
 
-const container = document.getElementById('container');
-const flexContainer = document.getElementById('flex_container');
-const mainMenu = document.getElementById('main_menu')
-const createGameButton = document.getElementById('create_game_button');
-const createLeaderboardButton = document.getElementById('create_leaderboard_button');
+const container = document.getElementById('container'); // Finding container div.
+const flexContainer = document.getElementById('flex_container'); // Finding flexContainer div.
+const mainMenu = document.getElementById('main_menu'); // Finding mainMenu div.
+const createGameButton = document.getElementById('create_game_button'); // Finding createGameButton button.
+const createLeaderboardButton = document.getElementById('create_leaderboard_button'); // Finding createLeaderboardButton button.
 
 // Playing field components.
-const canvas = document.createElement('canvas');
-canvas.id = 'canvas';
+const canvas = document.createElement('canvas'); // Creating canvas.
+canvas.id = 'canvas'; 
 
-const playingField = document.createElement('div');
+const playingField = document.createElement('div'); // Creating field for game.
 playingField.id = 'playing_field';
 
-const playingFieldCounter = document.createElement('div');
+const playingFieldCounter = document.createElement('div'); // Creating counter for game.
 
 // Ending window components.
-const endWindow = document.createElement('div');
+const endWindow = document.createElement('div'); // Creating window after a lose.
 endWindow.id = 'end_window';
 
-const endWindowTitle = document.createElement('div');
+const endWindowTitle = document.createElement('div'); // Creating title for this window.
 endWindowTitle.id = 'end_window_title';
-endWindowTitle.innerHTML = 'You loose!';
+endWindowTitle.innerHTML = 'You lose!';
 
-const endWindowScores = document.createElement('div');
+const endWindowScores = document.createElement('div'); // Creating result for this window.
 endWindowScores.id = 'end_window_scores';
 
-const endWindowButtonAgain = document.createElement('div');
+const endWindowButtonAgain = document.createElement('div'); // Creating button Again for this window.
 endWindowButtonAgain.id = 'end_window_button_again';
 endWindowButtonAgain.innerHTML = 'Replay';
 
-const endWindowButtonExit = document.createElement('div');
-endWindowButtonExit.id = 'end_window_button_exit';  //exit
+const endWindowButtonExit = document.createElement('div'); // Creating button for closing this window.
+endWindowButtonExit.id = 'end_window_button_exit';
 endWindowButtonExit.innerHTML = 'Exit';
 
 // Window if player set new record.
-const newRecordWindow = document.createElement('div');
+const newRecordWindow = document.createElement('div'); // Creating window for new record.
 newRecordWindow.id = 'new_record_window';
 
-const newRecordWindowTitle = document.createElement('div');
+const newRecordWindowTitle = document.createElement('div'); // Creating title for this window.
 newRecordWindowTitle.innerHTML = 'Congratulations!';
 
-const newRecordWindowDiscription1 = document.createElement('div');
+const newRecordWindowDiscription1 = document.createElement('div'); // Creating discription for this window.
 newRecordWindowDiscription1.innerHTML = 'You entered the top-10.';
 
-const newRecordWindowDiscription2 = document.createElement('div');
+const newRecordWindowDiscription2 = document.createElement('div'); // Creating discription for this window.
 newRecordWindowDiscription2.id = 'new_record_window_discription_2';
 newRecordWindowDiscription2.innerHTML = 'Enter your nickname. Nickname must includes 5 symbols.'
 
-const newRecordWindowInput = document.createElement('input');
+const newRecordWindowInput = document.createElement('input'); // Creating input for writing nickname. 
 newRecordWindowInput.id = 'new_record_window_input'
 
-const newRecordWindowError = document.createElement('div');
+const newRecordWindowError = document.createElement('div'); // Creating inscription if nickname will wrong.
 newRecordWindowError.id = 'new_record_window_error';
 newRecordWindowError.innerHTML = 'Nickname is incorrect.';
 
-const newRecordWindowButtonOk = document.createElement('button');
+const newRecordWindowButtonOk = document.createElement('button'); // Creating button for accept.
 newRecordWindowButtonOk.id = 'button_ok';
 newRecordWindowButtonOk.innerHTML = 'OK';
 
 // Leaderboard components.
-const leaderboard = document.createElement('div');
+const leaderboard = document.createElement('div'); // Creating leaderboard.
 leaderboard.id = 'leaderboard';
 
-const leaderboardTitle = document.createElement('div');
+const leaderboardTitle = document.createElement('div'); // Creating title for this window.
 leaderboardTitle.id = 'leaderboard_title';
 leaderboardTitle.innerHTML = ('Leaderboard');
 
-const leaderboardResults = document.createElement('div');
+const leaderboardResults = document.createElement('div'); // Creating div for grouping two blocks.
 leaderboardResults.id = 'leaderboard_results';
 
-const leaderboardNicknamesTitle = document.createElement('div');
+const leaderboardNicknamesTitle = document.createElement('div'); // Creating title for "leaderboardNicknames" div.
 leaderboardNicknamesTitle.id = 'leaderboard_nicknames_title';
 leaderboardNicknamesTitle.innerHTML = ('Nick');
 
-const leaderboardNicknames = document.createElement('div');
+const leaderboardNicknames = document.createElement('div'); // Creating block for nicknames.
 leaderboardNicknames.id = 'nicknames';
 
-const leaderboardScores = document.createElement('div');
-leaderboardScores.id = 'scores_id';
-
-const leaderboardScoresTitle = document.createElement('div');
+const leaderboardScoresTitle = document.createElement('div'); // Creating title for "leaderboardScores" div.
 leaderboardScoresTitle.id = 'leaderboard_scores_title';
 leaderboardScoresTitle.innerHTML = ('Scores');
 
-const leaderboardButtonExit = document.createElement('button');
+const leaderboardScores = document.createElement('div'); // Creating block for scores.
+leaderboardScores.id = 'scores_id';
+
+for (let i = 1; i <= 10; i++) {
+  let nickname = document.createElement('div'); // Creating div for nicknames value.
+  nickname.className = 'nickname';
+
+  leaderboardNicknames.appendChild(nickname);
+}
+
+for (let i = 1; i <= 10; i++) {
+  let scores = document.createElement('div'); // Creating div for scores value.
+  scores.className = 'scores_class';
+
+  leaderboardScores.appendChild(scores);
+}
+
+const leaderboardButtonExit = document.createElement('button'); // Creating button for closing leaderboard.
 leaderboardButtonExit.id = 'leaderboard_button_exit';
 leaderboardButtonExit.innerHTML = ('Close');
 
-for (let i = 1; i <= 10; i++) {
-  let nickname = document.createElement('div');
-  nickname.className = 'nickname';
+createGameButton.addEventListener('click', createGame, false); // Adding event listener for 'createGameButton'.
+createGameButton.addEventListener('touchStart', createGame, false); // Adding event listener for 'createGameButton'.
+createLeaderboardButton.addEventListener('click', createLeaderboard, false); // Adding event listener for 'createLeaderboardButton'.
+createLeaderboardButton.addEventListener('touchStart', createLeaderboard, false); // Adding event listener for 'createLeaderboardButton'.
+leaderboardButtonExit.addEventListener('click', closeLeaderboard, false); // Adding event listener for 'leaderboardButtonExit'.
+leaderboardButtonExit.addEventListener('touchStart', closeLeaderboard, false); // Adding event listener for 'leaderboardButtonExit'.
 
-  leaderboardNicknames.appendChild(nickname)
-}
-
-for (let i = 1; i <= 10; i++) {
-  let scores = document.createElement('div');
-  scores.className = 'scores_class';
-
-  leaderboardScores.appendChild(scores)
-}
-
-createGameButton.addEventListener('click', createGame, false);
-createGameButton.addEventListener('touchStart', createGame, false);
-createLeaderboardButton.addEventListener('click', createLeaderboard, false);
-createLeaderboardButton.addEventListener('touchStart', createLeaderboard, false);
-leaderboardButtonExit.addEventListener('click', closeLeaderboard, false);
-leaderboardButtonExit.addEventListener('touchStart', closeLeaderboard, false);
-
-const soundEat = new Audio();
+const soundEat = new Audio(); // Creating sound after eating apple.
 soundEat.src = 'sounds/eat.mp3';
 
+// Creating game
 function createGame() {
 
-  window.navigator.vibrate(200)
+  window.navigator.vibrate(200); // Vibration response
 
-  const widthScreen =  window.innerWidth;
-  const heightScreen = window.innerHeight;
+  const widthScreen =  window.innerWidth; // Width of the viewport.
+  const heightScreen = window.innerHeight; // Height of the viewport.
 
   // Adaptive for Canvas
 
-  let gameSize;
+  let gameSize; // Size of game field.
 
   if (widthScreen >= heightScreen) {
     if(heightScreen < 320 && heightScreen >= 200) {
@@ -166,7 +167,7 @@ function createGame() {
     } else if (heightScreen <= 1920 && heightScreen >= 1800) {
       gameSize = 1425;
     } else {
-      alert('С таким-то экраном змейка явно не для вас.')
+      alert('The game is not designed for your screen size.')
     }
   }
 
@@ -195,6 +196,8 @@ function createGame() {
       gameSize = 1125;
     } else if (widthScreen < 1440 && widthScreen >= 1242) {
       gameSize = 1200;
+    } else {
+      alert('The game is not designed for your screen size.')
     }
   }
 
@@ -204,13 +207,13 @@ function createGame() {
   newRecordWindow.style.maxHeight = gameSize/100 * 80 + 'px';
 
   // Сanvas
-  canvas.setAttribute('width', gameSize)
-  canvas.setAttribute('height', gameSize)
+  canvas.setAttribute('width', gameSize);
+  canvas.setAttribute('height', gameSize);
   let ctx = canvas.getContext('2d');
 
   // Cell size
 
-  let cell = gameSize/15;
+  let cell = gameSize/15; // Size of gaming cell.
 
   // Snake class & svg
 
@@ -222,7 +225,7 @@ function createGame() {
       }];
     }
 
-    eatTail(head, arr) {
+    eatTail(head, arr) { // Game is ending if snake will crush into himself.
       for (let i = 0; i < arr.length; i++) {
         if (head.x == arr[i].x && head.y == arr[i].y) {
           endGame();
@@ -230,13 +233,13 @@ function createGame() {
       }
     }
 
-    outwardField(snakeX, snakeY) {
+    outwardField(snakeX, snakeY) { // Game is ending if snake will crush into end of gaming field.
       if (snakeX < 0 || snakeX > cell*14 || snakeY < 0 || snakeY > cell*14) {
         endGame();
       }
     }
 
-    replay() {
+    replay() { // Beginning position after pressing 'again' button.
       snakeObj.snake[0].x = 7*cell
       snakeObj.snake[0].y = 7*cell
 
@@ -255,7 +258,7 @@ function createGame() {
       this.y = Math.floor((Math.random() * 15)) * cell; 
     }
 
-    new() {
+    new() { // New position after eating apple by snake.
       let randomCellX = Math.floor((Math.random() * 15)) * cell;
       let randomCellY = Math.floor((Math.random() * 15)) * cell;
       for (let i = 0; i < snakeObj.snake.length; i++) {
@@ -277,45 +280,45 @@ function createGame() {
       this.scores = scores;
     }
 
-    update() {
+    update() { // Updating counter after eating apple by snake.
       playingFieldCounter.innerHTML = `Scores: ${this.scores}`;    
     }
   }
 
   // Control
 
-  document.addEventListener('keydown', direction);
+  document.addEventListener('keydown', direction); // Adding event listener for pressing key.
     
-  let dir;
+  let dir; // Snake direction.
 
   function direction(e) {
     if ((e.keyCode == 37 || e.keyCode == 65) && dir != 'right') {
       dir = 'left';
       snakeHead.src = snakeHeadLeftImg.src;
     } else if ((e.keyCode == 38 || e.keyCode == 87) && dir != 'down') {
-      dir = 'up'
+      dir = 'up';
       snakeHead.src = snakeHeadUpImg.src;
     } else if ((e.keyCode == 39 || e.keyCode == 68) && dir != 'left') {
-      dir = 'right'
+      dir = 'right';
       snakeHead.src = snakeHeadRightImg.src;
     } else if ((e.keyCode == 40 || e.keyCode == 83) && dir != 'up') {
-      dir = 'down'
+      dir = 'down';
       snakeHead.src = snakeHeadBottomImg.src;
     }
   }
 
-  // Pop-up window after loose
+  // Pop-up window after lose
 
   function endGame() {
-    let table;
-    let newRecordWindowInputValue;
-    let error;
-    let randomPassword = Math.random();
+    let table; // Creating variable for saving result of leaderboard.
+    let newRecordWindowInputValue; //  Creating variable for saving nickname.
+    let error; //  Creating variable for saving error from nickname input.
+    let randomPassword = Math.random(); // Creating random password for fetch.
 
-    endWindowButtonAgain.addEventListener('touchstart', again, false);
-    endWindowButtonAgain.addEventListener('click', again, false);
-    endWindowButtonExit.addEventListener('touchstart', exit, false);
-    endWindowButtonExit.addEventListener('click', exit, false);
+    endWindowButtonAgain.addEventListener('touchstart', again, false); // Adding event listener for 'endWindowButtonAgain'.
+    endWindowButtonAgain.addEventListener('click', again, false); // Adding event listener for 'endWindowButtonAgain'.
+    endWindowButtonExit.addEventListener('touchstart', exit, false); // Adding event listener for 'endWindowButtonAgain'.
+    endWindowButtonExit.addEventListener('click', exit, false); // Adding event listener for 'endWindowButtonAgain'.
     
     endWindowTitle.style.fontSize = gameSize/12 + 'px';
 
@@ -328,6 +331,7 @@ function createGame() {
     endWindowButtonExit.style.fontSize = gameSize/15 + 'px';
     endWindowButtonExit.style.marginBottom = gameSize/30 + 'px';
 
+    // Fetch for reading Json string.
     const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
     let spRead = new URLSearchParams();
     spRead.append('f', 'READ');
@@ -338,41 +342,44 @@ function createGame() {
     .then( info => { isNewRecord(JSON.parse(info.result) ) } )
     .catch( error => { console.error(error); } );
 
+    // New game after lose.
     function again() {
-      window.navigator.vibrate(200)
+      window.navigator.vibrate(200); // Vibration response
 
       playingField.removeChild(endWindow);
 
       appleObj.new();
       snakeObj.replay();
 
-      endWindowButtonAgain.removeEventListener('touchstart', again, false);
-      endWindowButtonAgain.removeEventListener('click', again, false);
-      endWindowButtonExit.removeEventListener('touchstart', exit, false);
-      endWindowButtonExit.removeEventListener('click', exit, false);
+      endWindowButtonAgain.removeEventListener('click', again, false); // Removing event listener for 'endWindowButtonAgain'. 
+      endWindowButtonAgain.removeEventListener('touchstart', again, false); // Removing event listener for 'endWindowButtonAgain'. 
+      endWindowButtonExit.removeEventListener('click', exit, false); // Removing event listener for 'endWindowButtonExit'. 
+      endWindowButtonExit.removeEventListener('touchstart', exit, false); // Removing event listener for 'endWindowButtonExit'.
 
       interval = setInterval(drawGame, 100)
     }
 
+    // Exit to main menu.
     function exit() {
-      window.navigator.vibrate(200)
+      window.navigator.vibrate(200);
       
       playingField.removeChild(endWindow);
       document.body.removeChild(playingField);
       document.body.appendChild(container);
 
-      endWindowButtonAgain.removeEventListener('touchstart', again, false);
-      endWindowButtonAgain.removeEventListener('click', again, false);
-      endWindowButtonExit.removeEventListener('touchstart', exit, false);
-      endWindowButtonExit.removeEventListener('click', exit, false);
+      endWindowButtonAgain.removeEventListener('touchstart', again, false); // Removing event listener for 'endWindowButtonAgain'.
+      endWindowButtonAgain.removeEventListener('click', again, false); // Removing event listener for 'endWindowButtonAgain'.
+      endWindowButtonExit.removeEventListener('touchstart', exit, false); // Removing event listener for 'endWindowButtonExit'.
+      endWindowButtonExit.removeEventListener('click', exit, false); // Removing event listener for 'endWindowButtonExit'.
     }
 
+    // Creating window if player take new record.
     function isNewRecord(records) {
-      let scores = counterObj.scores;
+      let scores = counterObj.scores; // Creating variable for saving player's scrores.
       if (scores > records[9].record) {
-        newRecordWindowInput.addEventListener('blur', validInput, false);
-        newRecordWindowButtonOk.addEventListener('click', accept, false);
-        newRecordWindowButtonOk.addEventListener('touchStart', accept, false);
+        newRecordWindowInput.addEventListener('blur', validInput, false); // Adding event listener for 'newRecordWindowInput'.
+        newRecordWindowButtonOk.addEventListener('click', accept, false); // Adding event listener for 'newRecordWindowButtonOk'. 
+        newRecordWindowButtonOk.addEventListener('touchStart', accept, false); // Adding event listener for 'newRecordWindowButtonOk'.
 
         newRecordWindowTitle.style.fontSize = gameSize/13 + 'px';
 
@@ -400,11 +407,12 @@ function createGame() {
         newRecordWindow.appendChild(newRecordWindowError);
         newRecordWindow.appendChild(newRecordWindowButtonOk);
       
+        // Checks if nickname is variable.
         function validInput() {
           newRecordWindowInputValue = newRecordWindowInput.value;
       
           if(newRecordWindowInputValue.length === 0 || newRecordWindowInputValue.length > 5 || newRecordWindowInputValue[0] === " " || newRecordWindowInputValue[newRecordWindowInputValue.length - 1] === " ") {
-            newRecordWindowError.style.visibility = 'visible'
+            newRecordWindowError.style.visibility = 'visible';
             newRecordWindowError.style.color = 'red';
             error++;
           } else {
@@ -415,12 +423,15 @@ function createGame() {
           return error;
         }
 
+        // Send json string if nick variable.
         function accept() {
-          let error = 0;
+          window.navigator.vibrate(200);
+
+          let error = 0; // Creating variable into function for saving error value.
           error+=validInput()
           if (error == 0) {
+            // Fetch for lockget
             const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
-
             let spLockget = new URLSearchParams();
             spLockget.append('f', 'LOCKGET');
             spLockget.append('n', 'AMELCHENKO_SNAKE_LEADERBOARD');
@@ -431,10 +442,11 @@ function createGame() {
             .then( data => { lockGetReady(data) } )
             .catch( error => { console.error(error); } );
 
+            // Update string after lockget.
             function lockGetReady(recordsTable) {
-              let repeatingNick;
+              let repeatingNick; // Creating variable for saving index repeating nickname
               
-              table = JSON.parse(recordsTable.result)
+              table = JSON.parse(recordsTable.result);
 
               repeatingNick = table.map(el => el.nick).indexOf(newRecordWindowInputValue);
 
@@ -443,8 +455,8 @@ function createGame() {
                   table[repeatingNick].record = counterObj.scores;
                 }
               } else {
-                let obj = {nick: newRecordWindowInputValue, record: counterObj.scores}
-                table.push(obj)
+                let obj = {nick: newRecordWindowInputValue, record: counterObj.scores};
+                table.push(obj);
               }
 
               table.sort(function (a, b) {
@@ -461,11 +473,12 @@ function createGame() {
                 table.pop();
               }
 
+              // Fetch for update string
               let spUpdate = new URLSearchParams();
               spUpdate.append('f', 'UPDATE');
               spUpdate.append('n', 'AMELCHENKO_SNAKE_LEADERBOARD');
-              spUpdate.append('p', randomPassword)
-              spUpdate.append('v', JSON.stringify(table))
+              spUpdate.append('p', randomPassword);
+              spUpdate.append('v', JSON.stringify(table));
 
               fetch(ajaxHandlerScript, { method: 'post', body: spUpdate })
               .then( response => response.json() )
@@ -475,13 +488,13 @@ function createGame() {
 
             newRecordWindowButtonOk.removeEventListener('click', accept, false);
             newRecordWindowButtonOk.removeEventListener('touchStart', accept, false);
-            playingField.removeChild(newRecordWindow)
+            playingField.removeChild(newRecordWindow);
           }
         }
       }
     }
     
-    clearInterval(interval)
+    clearInterval(interval);
 
     playingField.appendChild(endWindow);
     endWindow.appendChild(endWindowTitle);
@@ -558,39 +571,39 @@ function createGame() {
     }
   }
 
-  // Create objects
+  // Createing objects
 
-  let snakeObj = new snake(7*cell, 7*cell)
-  let appleObj = new apple();
-  let counterObj = new counter(0);
+  let snakeObj = new snake(7*cell, 7*cell) // Snake object
+  let appleObj = new apple(); // Apple object
+  let counterObj = new counter(0); // Counter object
 
   playingFieldCounter.style.fontSize = gameSize/15 + 'px';
-  playingFieldCounter.style.fontFamily = 'Undertale-Battle-Font'
+  playingFieldCounter.style.fontFamily = 'Undertale-Battle-Font';
 
   // Game
 
   function drawGame() {
     ctx.beginPath();
-    ctx.fillStyle = ('#674D3D')
+    ctx.fillStyle = ('#674D3D');
     ctx.fillRect(0, 0, gameSize, gameSize);
     ctx.stroke();
 
     for (let i = 1; i < 15; i++) {
       ctx.beginPath();
-      ctx.moveTo((gameSize/15)*i, 0)
-      ctx.lineTo((gameSize/15)*i, gameSize)
+      ctx.moveTo((gameSize/15)*i, 0);
+      ctx.lineTo((gameSize/15)*i, gameSize);
       ctx.stroke();
 
       ctx.beginPath();
-      ctx.moveTo(0, (gameSize/15)*i)
-      ctx.lineTo(gameSize, (gameSize/15)*i)
+      ctx.moveTo(0, (gameSize/15)*i);
+      ctx.lineTo(gameSize, (gameSize/15)*i);
       ctx.stroke();
     }
 
-    ctx.drawImage(appleImg, appleObj.x, appleObj.y, cell, cell)
+    ctx.drawImage(appleImg, appleObj.x, appleObj.y, cell, cell);
 
     for(let i = 0; i < snakeObj.snake.length; i++) {
-      ctx.drawImage(i == 0 ? snakeHead: snakeBodyImg, snakeObj.snake[i].x, snakeObj.snake[i].y, cell, cell)
+      ctx.drawImage(i == 0 ? snakeHead: snakeBodyImg, snakeObj.snake[i].x, snakeObj.snake[i].y, cell, cell);
     }
 
     let snakeX = snakeObj.snake[0].x;
@@ -625,13 +638,17 @@ function createGame() {
 
   drawGame()
   let interval = setInterval(drawGame, 100);
-  document.body.appendChild(playingField)
-  playingField.appendChild(canvas)
-  playingField.appendChild(playingFieldCounter)
-  document.body.removeChild(container)
+  document.body.appendChild(playingField);
+  playingField.appendChild(canvas);
+  playingField.appendChild(playingFieldCounter);
+  document.body.removeChild(container);
 }
 
+// Creating leaderboard
 function createLeaderboard() {
+  window.navigator.vibrate(200); // Vibration response
+ 
+  // Fetch for reading Json string
   const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
   let spReadLeaderboard = new URLSearchParams();
   spReadLeaderboard.append('f', 'READ');
@@ -642,16 +659,17 @@ function createLeaderboard() {
   .then( data => { buildLeaderBoard(JSON.parse(data.result) ) } )
   .catch( error => { console.error(error); } );
 
+  // Building leaderboard
   function buildLeaderBoard(leaderboardArr) {
-    let nicknameDiv = document.getElementsByClassName('nickname');
-    let scoresDiv = document.getElementsByClassName('scores_class');
+    let nicknameDiv = document.getElementsByClassName('nickname'); // Creating variable for saving elements with class name 'nickname'.
+    let scoresDiv = document.getElementsByClassName('scores_class'); // Creating variable for saving elements with class name 'scores_class'
 
     for (let i = 0; i <= 9; i++) {
-      nicknameDiv[i].innerHTML = (leaderboardArr[i].nick)
+      nicknameDiv[i].innerHTML = (leaderboardArr[i].nick);
     }
 
     for (let i = 0; i <= 9; i++) {
-      scoresDiv[i].innerHTML = (leaderboardArr[i].record)
+      scoresDiv[i].innerHTML = (leaderboardArr[i].record);
     }
   }
 
@@ -659,37 +677,42 @@ function createLeaderboard() {
   flexContainer.appendChild(leaderboard);
   leaderboard.appendChild(leaderboardTitle);
   leaderboard.appendChild(leaderboardResults);
-  leaderboard.appendChild(leaderboardButtonExit)
-  leaderboardResults.appendChild(leaderboardNicknamesTitle)
-  leaderboardNicknamesTitle.appendChild(leaderboardNicknames)
-  leaderboardScoresTitle.appendChild(leaderboardScores)
-  leaderboardResults.appendChild(leaderboardScoresTitle)
+  leaderboard.appendChild(leaderboardButtonExit);
+  leaderboardResults.appendChild(leaderboardNicknamesTitle);
+  leaderboardNicknamesTitle.appendChild(leaderboardNicknames);
+  leaderboardScoresTitle.appendChild(leaderboardScores);
+  leaderboardResults.appendChild(leaderboardScoresTitle);
 }
 
+// Closing leaderboard
 function closeLeaderboard() {
+  window.navigator.vibrate(200); // Vibration response
+
   flexContainer.appendChild(mainMenu);
   flexContainer.removeChild(leaderboard);
   leaderboard.removeChild(leaderboardTitle);
   leaderboard.removeChild(leaderboardResults);
-  leaderboard.removeChild(leaderboardButtonExit)
-  leaderboardResults.removeChild(leaderboardNicknamesTitle)
-  leaderboardNicknamesTitle.removeChild(leaderboardNicknames)
-  leaderboardScoresTitle.removeChild(leaderboardScores)
-  leaderboardResults.removeChild(leaderboardScoresTitle)
+  leaderboard.removeChild(leaderboardButtonExit);
+  leaderboardResults.removeChild(leaderboardNicknamesTitle);
+  leaderboardNicknamesTitle.removeChild(leaderboardNicknames);
+  leaderboardScoresTitle.removeChild(leaderboardScores);
+  leaderboardResults.removeChild(leaderboardScoresTitle);
 }
 
+// Function for activate sound.
 function clickSound() {
   soundEat.currentTime=0;
   soundEat.play();
 }
 
+// Preload svgs
 function preload() {
   snakeHead.src = 'img/snake_head_bottom.svg';
-  snakeHeadBottomImg.src = 'img/snake_head_bottom.svg'
-  snakeHeadLeftImg.src = 'img/snake_head_left.svg'
-  snakeHeadRightImg.src = 'img/snake_head_right.svg'
-  snakeHeadUpImg.src = 'img/snake_head_up.svg'
-  snakeBodyImg.src = 'img/snake_body.svg'
+  snakeHeadBottomImg.src = 'img/snake_head_bottom.svg';
+  snakeHeadLeftImg.src = 'img/snake_head_left.svg';
+  snakeHeadRightImg.src = 'img/snake_head_right.svg';
+  snakeHeadUpImg.src = 'img/snake_head_up.svg';
+  snakeBodyImg.src = 'img/snake_body.svg';
   appleImg.src = 'img/apple.svg';
 
   snakeHead.style.visibility = 'hidden';
@@ -700,11 +723,18 @@ function preload() {
   snakeBodyImg.style.visibility = 'hidden';
   appleImg.style.visibility = 'hidden';
 
-  document.body.appendChild(snakeHead)
-  document.body.appendChild(snakeHeadBottomImg)
-  document.body.appendChild(snakeHeadLeftImg)
-  document.body.appendChild(snakeHeadRightImg)
-  document.body.appendChild(snakeHeadUpImg)
-  document.body.appendChild(snakeBodyImg)
-  document.body.appendChild(appleImg)
+  document.body.appendChild(snakeHead);
+  document.body.appendChild(snakeHeadBottomImg);
+  document.body.appendChild(snakeHeadLeftImg);
+  document.body.appendChild(snakeHeadRightImg);
+  document.body.appendChild(snakeHeadUpImg);
+  document.body.appendChild(snakeBodyImg);
+  document.body.appendChild(appleImg);
 }
+
+// Warning window before reload page.
+window.onbeforeunload = function(e) {
+  var dialogText = 'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'; // Text of warning window.
+  e.returnValue = dialogText;
+  return dialogText;
+};
